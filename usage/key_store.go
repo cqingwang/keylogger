@@ -1,7 +1,6 @@
 package usage
 
 import (
-	"fmt"
 	"usb_keyboard/keyboard"
 )
 
@@ -25,8 +24,6 @@ func (i *KeyStore) Append(key keyboard.InputEvent) *KeyStore {
 		return i
 	}
 	i.keys = append(i.keys, key)
-	fmt.Println("keys:", i.keys, key)
-
 	return i
 }
 
