@@ -15,8 +15,11 @@ func DeviceBind(err error, device string) {
 
 	defer k.Close()
 	events := k.Read()
+	keyStore := &KeyStore{done: func(keys []*keyboard.InputEvent) {
+		fmt.Println(keys)
+	}}
 	for e := range events {
-		handleKeyEvent(e)
+		handleKeyEvent(&e, keyStore)
 	}
 }
 
@@ -25,34 +28,16 @@ func DevicesFind() ([]string, error) {
 	if len(devices) <= 0 {
 		return nil, errors.New("not one keyboard")
 	}
-
 	fmt.Println("devices:", devices)
 	return devices, nil
 }
 
-func handleKeyEvent(e keyboard.InputEvent) {
+func handleKeyEvent(e *keyboard.InputEvent, keystore *KeyStore) {
 	switch e.Type {
 	case keyboard.EvKey:
-		//onPress(e)
-		onRelease(e)
+		//logKeyPress(e)
+		logKeyRelease(e, keystore)
 		break
 	}
-}
 
-func onRelease(e keyboard.InputEvent) {
-	if e.KeyRelease() {
-		logEvent("keyRelease", e)
-	}
-}
-
-func onPress(e keyboard.InputEvent) {
-	if e.KeyPress() {
-		logEvent("keyPress", e)
-	}
-}
-
-func logEvent(title string, e keyboard.InputEvent) {
-	fmt.Println("")
-	fmt.Println("time:", e.UnixTime(), ", type:", e.Type, ", code:", e.Code)
-	fmt.Println(title, e.KeyString())
 }

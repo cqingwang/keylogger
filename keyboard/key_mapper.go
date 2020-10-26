@@ -1,5 +1,9 @@
 package keyboard
 
+const (
+	Key_ENTER = 28
+)
+
 // keyCodeMap connects the code with human readable key
 var keyCodeMap = map[uint16]string{
 	1:   "ESC",
