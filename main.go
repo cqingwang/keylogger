@@ -35,7 +35,6 @@ func main() {
 			if e.KeyRelease() {
 				fmt.Println("[event] release key ", e.KeyString())
 			}
-
 			break
 		}
 	}
