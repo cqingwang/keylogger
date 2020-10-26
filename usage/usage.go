@@ -38,11 +38,11 @@ func handleKeyEvent(e keyboard.InputEvent) {
 			fmt.Println("time:", e.UnixTime(), ", type:", e.Type, ", code:", e.Code)
 			fmt.Println("keyPress: ", e.KeyString())
 		}
-		fmt.Println("")
 		if e.KeyRelease() {
 			fmt.Println("time:", e.UnixTime(), ", type:", e.Type, ", code:", e.Code)
 			fmt.Println("keyRelease:", e.KeyString())
 		}
+		fmt.Println("")
 		break
 	}
 }

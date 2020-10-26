@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println("start")
+	fmt.Println("App starting....")
 	devices, err := usage.DevicesFind()
 	if err != nil {
 		fmt.Println(err.Error())
