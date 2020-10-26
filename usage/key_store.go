@@ -1,6 +1,9 @@
 package usage
 
-import "usb_keyboard/keyboard"
+import (
+	"fmt"
+	"usb_keyboard/keyboard"
+)
 
 type KeyStore struct {
 	keys []*keyboard.InputEvent
@@ -22,6 +25,8 @@ func (i *KeyStore) Append(key *keyboard.InputEvent) *KeyStore {
 		return i
 	}
 	i.keys = append(i.keys, key)
+	fmt.Println("keys:", i.keys, key)
+
 	return i
 }
 
