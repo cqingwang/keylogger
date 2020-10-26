@@ -1,4 +1,4 @@
-package keylogger
+package keyboard
 
 import (
 	"bytes"

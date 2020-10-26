@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"keylogger/keylogger"
+	"usb_keyboard/keyboard"
 )
 
 func main() {
 	fmt.Println("start")
-	devices := keylogger.FindAllKeyboardDevices()
+	devices := keyboard.FindAllKeyboardDevices()
 	fmt.Println("devices:", devices)
-	// init keylogger with keyboard
-	k, err := keylogger.New("/dev/input/event14")
+	// init keyboard with keyboard
+	k, err := keyboard.New("/dev/input/event14")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -24,7 +24,7 @@ func main() {
 		switch e.Type {
 		// EvKey is used to describe state changes of keyboards, buttons, or other key-like devices.
 		// check the input_event.go for more events
-		case keylogger.EvKey:
+		case keyboard.EvKey:
 
 			// if the state of key is pressed
 			if e.KeyPress() {

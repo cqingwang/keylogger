@@ -11,4 +11,4 @@
 // * Capture state changes
 //
 // See README at https://github.com/MarinX/keylogger for more info.
-package keylogger
+package keyboard
