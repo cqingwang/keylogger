@@ -33,15 +33,14 @@ func DevicesFind() ([]string, error) {
 func handleKeyEvent(e keyboard.InputEvent) {
 	switch e.Type {
 	case keyboard.EvKey:
+		fmt.Println(" - ")
 		if e.KeyPress() {
-			fmt.Println(" - ")
-			fmt.Println("[time,type,code]:", e.Time, e.Type, e.Code)
-			fmt.Println("[press] ", e.KeyString())
+			fmt.Println("time:", e.Time, ", type:", e.Type, ", code:", e.Code)
+			fmt.Println("keyPress: ", e.KeyString())
 		}
-
 		if e.KeyRelease() {
-			fmt.Println("[release,type,code]:", e.Time, e.Type, e.Code)
-			fmt.Println("[press] ", e.KeyString())
+			fmt.Println("[time,type,code]:", e.Time, e.Type, e.Code)
+			fmt.Println("keyRelease:", e.KeyString())
 		}
 		break
 	}
