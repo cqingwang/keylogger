@@ -28,12 +28,12 @@ func main() {
 
 			// if the state of key is pressed
 			if e.KeyPress() {
-				fmt.Println("[event] press key ", e.KeyString())
+				fmt.Println("[event] press key ", e.Time, e.Type, e.Code, e.KeyString())
 			}
 
 			// if the state of key is released
 			if e.KeyRelease() {
-				fmt.Println("[event] release key ", e.KeyString())
+				fmt.Println("[event] release key ", e.Time, e.Type, e.Code, e.KeyString())
 			}
 			break
 		}
