@@ -16,7 +16,7 @@ func DeviceBind(err error, device string) {
 	defer k.Close()
 	events := k.Read()
 	keyStore := &KeyStore{complete: func(self *KeyStore) {
-		fmt.Println(self.keys[0].UnixTime(), self.ToString())
+		fmt.Println("time:", self.keys[0].UnixTime(), "code:", self.ToString())
 	}}
 	for e := range events {
 		handleKeyEvent(e, keyStore)
