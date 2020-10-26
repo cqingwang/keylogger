@@ -10,7 +10,7 @@ func onKeyRelease(e keyboard.InputEvent, keystore *KeyStore) {
 		return
 	}
 
-	logEvent(e)
+	//logEvent(e)
 	keystore.Append(e)
 }
 
