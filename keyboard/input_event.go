@@ -2,6 +2,7 @@ package keyboard
 
 import (
 	"syscall"
+	"time"
 	"unsafe"
 )
 
@@ -52,6 +53,11 @@ type InputEvent struct {
 // eg enter, space, a, b, c...
 func (i *InputEvent) KeyString() string {
 	return keyCodeMap[i.Code]
+}
+
+func (i *InputEvent) UnixTime() time.Time {
+	return time.Unix(int64(i.Time.Sec), int64(i.Time.Usec))
+
 }
 
 // KeyPress is the value when we press the key on keyboard
