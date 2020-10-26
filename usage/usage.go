@@ -34,6 +34,7 @@ func handleKeyEvent(e keyboard.InputEvent) {
 	switch e.Type {
 	case keyboard.EvKey:
 		if e.KeyPress() {
+			fmt.Println(" - ")
 			fmt.Println("[time,type,code]:", e.Time, e.Type, e.Code)
 			fmt.Println("[press] ", e.KeyString())
 		}
