@@ -1,7 +1,8 @@
 package keyboard
 
 const (
-	Key_ENTER = 28
+	KEY_ENTER = 28
+	KEY_DOWN  = 80
 )
 
 // keyCodeMap connects the code with human readable key

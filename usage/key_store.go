@@ -18,11 +18,16 @@ func (i *KeyStore) ToString() string {
 }
 
 func (i *KeyStore) Append(key keyboard.InputEvent) *KeyStore {
-	if key.Code == keyboard.Key_ENTER {
+	if key.Code == keyboard.KEY_ENTER {
+		return i
+	}
+
+	if key.Code == keyboard.KEY_ENTER {
 		i.done(i)
 		i.pop()
 		return i
 	}
+
 	i.keys = append(i.keys, key)
 	return i
 }
