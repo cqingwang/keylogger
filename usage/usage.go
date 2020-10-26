@@ -34,11 +34,13 @@ func handleKeyEvent(e keyboard.InputEvent) {
 	switch e.Type {
 	case keyboard.EvKey:
 		if e.KeyPress() {
-			fmt.Println("[press] key ", e.Time, e.Type, e.Code, e.KeyString())
+			fmt.Println("[time,type,code]:", e.Time, e.Type, e.Code)
+			fmt.Println("[press] ", e.KeyString())
 		}
 
 		if e.KeyRelease() {
-			fmt.Println("[release] key ", e.Time, e.Type, e.Code, e.KeyString())
+			fmt.Println("[release,type,code]:", e.Time, e.Type, e.Code)
+			fmt.Println("[press] ", e.KeyString())
 		}
 		break
 	}
