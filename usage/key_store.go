@@ -6,7 +6,7 @@ import (
 )
 
 type KeyStore struct {
-	keys []*keyboard.InputEvent
+	keys []keyboard.InputEvent
 	done func(self *KeyStore)
 }
 
@@ -18,7 +18,7 @@ func (i *KeyStore) ToString() string {
 	return rst
 }
 
-func (i *KeyStore) Append(key *keyboard.InputEvent) *KeyStore {
+func (i *KeyStore) Append(key keyboard.InputEvent) *KeyStore {
 	if key.Code == keyboard.Key_ENTER {
 		i.done(i)
 		i.pop()
@@ -30,11 +30,11 @@ func (i *KeyStore) Append(key *keyboard.InputEvent) *KeyStore {
 	return i
 }
 
-func (i *KeyStore) Read() []*keyboard.InputEvent {
+func (i *KeyStore) Read() []keyboard.InputEvent {
 	return i.keys
 }
 
-func (i *KeyStore) pop() []*keyboard.InputEvent {
-	i.keys = []*keyboard.InputEvent{}
+func (i *KeyStore) pop() []keyboard.InputEvent {
+	i.keys = []keyboard.InputEvent{}
 	return i.keys
 }
