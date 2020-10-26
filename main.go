@@ -7,6 +7,8 @@ import (
 
 func main() {
 	fmt.Println("start")
+	devices := keylogger.FindAllKeyboardDevices()
+	fmt.Println("devices:", devices)
 	// init keylogger with keyboard
 	k, err := keylogger.New("/dev/input/event14")
 	if err != nil {
