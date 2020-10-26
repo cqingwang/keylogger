@@ -19,7 +19,7 @@ func DeviceBind(err error, device string) {
 		fmt.Println("done:", self.ToString())
 	}}
 	for e := range events {
-		handleKeyEvent(&e, keyStore)
+		handleKeyEvent(e, keyStore)
 	}
 }
 
@@ -32,7 +32,7 @@ func DevicesFind() ([]string, error) {
 	return devices, nil
 }
 
-func handleKeyEvent(e *keyboard.InputEvent, keystore *KeyStore) {
+func handleKeyEvent(e keyboard.InputEvent, keystore *KeyStore) {
 	switch e.Type {
 	case keyboard.EvKey:
 		//logKeyPress(e)
