@@ -2,40 +2,16 @@ package main
 
 import (
 	"fmt"
-	"usb_keyboard/keyboard"
+	"usb_keyboard/usage"
 )
 
 func main() {
 	fmt.Println("start")
-	devices := keyboard.FindAllKeyboardDevices()
-	fmt.Println("devices:", devices)
-	// init keyboard with keyboard
-	k, err := keyboard.New("/dev/input/event14")
+	devices, err := usage.DevicesFind()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 		return
 	}
-	defer k.Close()
 
-	events := k.Read()
-
-	// range of events
-	for e := range events {
-		switch e.Type {
-		// EvKey is used to describe state changes of keyboards, buttons, or other key-like devices.
-		// check the input_event.go for more events
-		case keyboard.EvKey:
-
-			// if the state of key is pressed
-			if e.KeyPress() {
-				fmt.Println("[event] press key ", e.Time, e.Type, e.Code, e.KeyString())
-			}
-
-			// if the state of key is released
-			if e.KeyRelease() {
-				fmt.Println("[event] release key ", e.Time, e.Type, e.Code, e.KeyString())
-			}
-			break
-		}
-	}
+	usage.DeviceBind(err, devices[0])
 }
