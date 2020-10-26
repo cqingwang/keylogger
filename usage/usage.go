@@ -36,7 +36,7 @@ func handleKeyEvent(e keyboard.InputEvent, keystore *KeyStore) {
 	switch e.Type {
 	case keyboard.EvKey:
 		//logKeyPress(e)
-		logKeyRelease(e, keystore)
+		onKeyRelease(e, keystore)
 		break
 	}
 
