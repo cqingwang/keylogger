@@ -18,7 +18,7 @@ func (i *KeyStore) ToString() string {
 }
 
 func (i *KeyStore) Append(key keyboard.InputEvent) *KeyStore {
-	if key.Code == keyboard.KEY_DOWN {
+	if key.Code == keyboard.KEY_DOWN_80 || key.Code == keyboard.KEY_DOWN_108 {
 		return i
 	}
 
