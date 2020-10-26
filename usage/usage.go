@@ -52,8 +52,7 @@ func onPress(e keyboard.InputEvent) {
 }
 
 func logEvent(title string, e keyboard.InputEvent) {
-	fmt.Println(" - ")
+	fmt.Println("")
 	fmt.Println("time:", e.UnixTime(), ", type:", e.Type, ", code:", e.Code)
 	fmt.Println(title, e.KeyString())
-	fmt.Println("")
 }
