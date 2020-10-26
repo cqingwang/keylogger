@@ -9,8 +9,6 @@ import (
 	"os"
 	"strings"
 	"syscall"
-
-	"github.com/sirupsen/logrus"
 )
 
 // KeyLogger wrapper around file descriptior
@@ -20,7 +18,7 @@ type KeyLogger struct {
 
 type devices []string
 
-func (d* devices) hasDevice(str string) bool {
+func (d *devices) hasDevice(str string) bool {
 	for _, device := range *d {
 		if strings.Contains(str, device) {
 			return true
@@ -55,7 +53,7 @@ func FindKeyboardDevice() string {
 	for i := 0; i < 255; i++ {
 		buff, err := ioutil.ReadFile(fmt.Sprintf(path, i))
 		if err != nil {
-			logrus.Error(err)
+			fmt.Println(err)
 		}
 
 		deviceName := strings.ToLower(string(buff))
@@ -86,7 +84,7 @@ func FindAllKeyboardDevices() []string {
 			break
 		}
 		if err != nil {
-			logrus.Error(err)
+			fmt.Println(err)
 		}
 
 		deviceName := strings.ToLower(string(buff))
@@ -114,7 +112,7 @@ func (k *KeyLogger) Read() chan InputEvent {
 		for {
 			e, err := k.read()
 			if err != nil {
-				logrus.Error(err)
+				fmt.Println(err)
 				close(event)
 				break
 			}
