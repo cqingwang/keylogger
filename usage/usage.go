@@ -15,8 +15,8 @@ func DeviceBind(err error, device string) {
 
 	defer k.Close()
 	events := k.Read()
-	keyStore := &KeyStore{done: func(keys []*keyboard.InputEvent) {
-		fmt.Println(keys)
+	keyStore := &KeyStore{done: func(self *KeyStore) {
+		fmt.Println(self.ToString())
 	}}
 	for e := range events {
 		handleKeyEvent(&e, keyStore)
