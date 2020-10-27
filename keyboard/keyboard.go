@@ -113,6 +113,8 @@ func (k *KeyLogger) Read() chan InputEvent {
 			keyEvent, err := k.read()
 			if err != nil {
 				fmt.Println("keyRead:", err)
+				shutdown := InputEvent{Code: SHUTDOWN}
+				emit <- shutdown
 				close(emit)
 				break
 			}
@@ -121,9 +123,7 @@ func (k *KeyLogger) Read() chan InputEvent {
 				emit <- *keyEvent
 			}
 		}
-		//shutdown flag
-		shutdown := InputEvent{Code: SHUTDOWN}
-		emit <- shutdown
+
 	}(emit)
 	return emit
 }
