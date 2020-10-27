@@ -3,16 +3,38 @@ package usage
 import (
 	"errors"
 	"fmt"
+	"time"
 	"usb_keyboard/keyboard"
 )
 
-var isListened = false
+func Watch(complete func(self *KeyStor)) {
+	if HasWatching() {
+		return
+	}
+	setWatching(true)
+	go func() {
+		for {
+			if !HasWatching() {
+				fmt.Println("Break keyboard watching")
+				break
+			}
 
-func HasListening() bool {
-	return isListened
-}
-func setListening(val bool) {
-	isListened = val
+			if HasListening() {
+				time.Sleep(time.Second * 3)
+				continue
+			}
+
+			devices := keyboard.FindAllKeyboardDevices()
+			if len(devices) <= 0 {
+				time.Sleep(time.Second * 3)
+				continue
+			}
+
+			DeviceBind(devices[0], complete)
+			time.Sleep(time.Second * 3)
+		}
+	}()
+
 }
 func DevicesFind() ([]string, error) {
 	devices := keyboard.FindAllKeyboardDevices()
@@ -23,7 +45,7 @@ func DevicesFind() ([]string, error) {
 	return devices, nil
 }
 
-func DeviceBind(err error, devPath string, listener func(self *KeyStor)) {
+func DeviceBind(devPath string, listener func(self *KeyStor)) {
 	go func() {
 		dev, err := keyboard.New(devPath) ///dev/input/event14
 		if err != nil {
