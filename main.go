@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 	"usb_keyboard/usage"
 )
@@ -12,12 +13,14 @@ func main() {
 		fmt.Println("time:", self.Get()[0].UnixTime(), "code:", self.ToString())
 	})
 
-	for {
-		time.Sleep(time.Second * 3)
-		fmt.Println("keyboard injected:", usage.HasListening())
-		//if !usage.HasListening() {
-		//	fmt.Println("keyboard maybe reject")
-		//	break
-		//}
-	}
+	go func() {
+		for {
+			time.Sleep(time.Second * 3)
+			fmt.Println("keyboard injected:", usage.HasListening())
+		}
+	}()
+
+	time.Sleep(time.Second * 30)
+	fmt.Println("force exit")
+	os.Exit(0)
 }
