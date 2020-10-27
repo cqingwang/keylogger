@@ -1,49 +1,35 @@
 package usage
 
 import (
-	"errors"
 	"fmt"
 	"github.com/cqingwang/usb_keyboard/keyboard"
 	"time"
 )
 
 func Watch(complete func(self *KeyStor)) {
-	if HasWatching() {
-		return
-	}
-	setWatching(true)
 	go func() {
 		for {
-			if !HasWatching() {
-				fmt.Println("Break keyboard watching")
-				break
-			}
-
-			if HasListening() {
-				time.Sleep(time.Second * 3)
-				continue
-			}
-
 			devices := keyboard.FindAllKeyboardDevices()
 			if len(devices) <= 0 {
 				time.Sleep(time.Second * 3)
 				continue
 			}
 
-			DeviceBind(devices[0], complete)
+			for _, dev := range devices {
+				val, ok := listenDevices[dev]
+				if ok && val {
+					continue
+				}
+				fmt.Println("keyboard.Bind:", dev)
+				DeviceBind(dev, complete)
+			}
 			time.Sleep(time.Second * 3)
 		}
 	}()
 
 }
-func DevicesFind() ([]string, error) {
-	devices := keyboard.FindAllKeyboardDevices()
-	if len(devices) <= 0 {
-		return nil, errors.New("not one keyboard")
-	}
-	fmt.Println("devices:", devices)
-	return devices, nil
-}
+
+var listenDevices = make(map[string]bool)
 
 func DeviceBind(devPath string, listener func(self *KeyStor)) {
 	go func() {
@@ -54,11 +40,12 @@ func DeviceBind(devPath string, listener func(self *KeyStor)) {
 		}
 		defer dev.Close()
 		events := dev.Read()
-		setListening(true)
+		listenDevices[devPath] = true
 		keyStore := &KeyStor{complete: listener}
 		for e := range events {
 			if e.Code == keyboard.SHUTDOWN {
-				setListening(false)
+				fmt.Println("keyboard.UnBind:", devPath)
+				listenDevices[devPath] = false
 				break
 			}
 			handleKeyEvent(e, keyStore)
