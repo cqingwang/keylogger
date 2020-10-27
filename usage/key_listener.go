@@ -24,22 +24,24 @@ func DevicesFind() ([]string, error) {
 }
 
 func DeviceBind(err error, devPath string, listener func(self *KeyStor)) {
-	dev, err := keyboard.New(devPath) ///dev/input/event14
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer dev.Close()
-	events := dev.Read()
-	setListening(true)
-	keyStore := &KeyStor{complete: listener}
-	for e := range events {
-		if e.Code == keyboard.SHUTDOWN {
-			setListening(false)
-			break
+	go func() {
+		dev, err := keyboard.New(devPath) ///dev/input/event14
+		if err != nil {
+			fmt.Println(err)
+			return
 		}
-		handleKeyEvent(e, keyStore)
-	}
+		defer dev.Close()
+		events := dev.Read()
+		setListening(true)
+		keyStore := &KeyStor{complete: listener}
+		for e := range events {
+			if e.Code == keyboard.SHUTDOWN {
+				setListening(false)
+				break
+			}
+			handleKeyEvent(e, keyStore)
+		}
+	}()
 }
 
 func handleKeyEvent(e keyboard.InputEvent, keystore *KeyStor) {
