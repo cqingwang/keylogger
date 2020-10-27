@@ -21,5 +21,9 @@ func main() {
 	for {
 		time.Sleep(time.Second * 3)
 		fmt.Println("keyboard listen:", usage.HasListening())
+		if usage.HasListening() {
+			fmt.Println("keyboard watch break")
+			break
+		}
 	}
 }
