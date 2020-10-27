@@ -14,10 +14,10 @@ func main() {
 
 	for {
 		time.Sleep(time.Second * 3)
-		fmt.Println("keyboard listen:", usage.HasListening())
-		if !usage.HasListening() {
-			fmt.Println("keyboard maybe reject")
-			break
-		}
+		fmt.Println("keyboard injected:", usage.HasListening())
+		//if !usage.HasListening() {
+		//	fmt.Println("keyboard maybe reject")
+		//	break
+		//}
 	}
 }
