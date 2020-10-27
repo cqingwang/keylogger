@@ -112,7 +112,7 @@ func (k *KeyLogger) Read() chan InputEvent {
 		for {
 			keyEvent, err := k.read()
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println("keyRead:", err)
 				close(emit)
 				break
 			}
