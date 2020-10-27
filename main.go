@@ -19,7 +19,7 @@ func main() {
 	})
 
 	for {
-		time.Sleep(2000)
+		time.Sleep(time.Second * 3)
 		fmt.Println("keyboard listen:", usage.HasListening())
 	}
 }
