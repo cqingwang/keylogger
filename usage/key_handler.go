@@ -2,7 +2,7 @@ package usage
 
 import (
 	"fmt"
-	"usb_keyboard/keyboard"
+	"github.com/cqingwang/usb_keyboard/keyboard"
 )
 
 type KeyStor struct {

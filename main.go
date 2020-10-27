@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/cqingwang/usb_keyboard/usage"
 	"os"
 	"time"
-	"usb_keyboard/usage"
 )
 
 func main() {

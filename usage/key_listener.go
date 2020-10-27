@@ -3,8 +3,8 @@ package usage
 import (
 	"errors"
 	"fmt"
+	"github.com/cqingwang/usb_keyboard/keyboard"
 	"time"
-	"usb_keyboard/keyboard"
 )
 
 func Watch(complete func(self *KeyStor)) {
