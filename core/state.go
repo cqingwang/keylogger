@@ -1,4 +1,4 @@
-package usb_keyboard
+package core
 
 var _isListened = false
 var _isWatching = false

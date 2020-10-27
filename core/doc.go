@@ -10,4 +10,4 @@
 //
 // * Capture state changes
 //
-package usb_keyboard
+package core

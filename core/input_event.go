@@ -1,4 +1,4 @@
-package usb_keyboard
+package core
 
 import (
 	"syscall"
