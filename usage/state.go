@@ -1,4 +1,4 @@
-package core
+package usage
 
 var _isListened = false
 var _isWatching = false

@@ -9,14 +9,14 @@ import (
 
 func main() {
 	fmt.Println("App starting....")
-	core.Watch(func(self *core.KeyStor) {
+	keyboard.Watch(func(self *keyboard.KeyStor) {
 		fmt.Println("time:", self.Get()[0].UnixTime(), "code:", self.ToString())
 	})
 
 	go func() {
 		for {
 			time.Sleep(time.Second * 3)
-			fmt.Println("keyboard injected:", core.HasListening())
+			fmt.Println("keyboard injected:", keyboard.HasListening())
 		}
 	}()
 

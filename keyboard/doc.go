@@ -10,4 +10,4 @@
 //
 // * Capture state changes
 //
-package core
+package keyboard

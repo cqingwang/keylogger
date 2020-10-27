@@ -1,4 +1,4 @@
-package core
+package keyboard
 
 const (
 	KEY_ENTER    = 28
