@@ -1,9 +1,8 @@
-package usage
+package usb_keyboard
 
 import (
 	"errors"
 	"fmt"
-	"github.com/cqingwang/usb_keyboard/keyboard"
 	"time"
 )
 
@@ -24,7 +23,7 @@ func Watch(complete func(self *KeyStor)) {
 				continue
 			}
 
-			devices := keyboard.FindAllKeyboardDevices()
+			devices := FindAllKeyboardDevices()
 			if len(devices) <= 0 {
 				time.Sleep(time.Second * 3)
 				continue
@@ -37,7 +36,7 @@ func Watch(complete func(self *KeyStor)) {
 
 }
 func DevicesFind() ([]string, error) {
-	devices := keyboard.FindAllKeyboardDevices()
+	devices := FindAllKeyboardDevices()
 	if len(devices) <= 0 {
 		return nil, errors.New("not one keyboard")
 	}
@@ -47,7 +46,7 @@ func DevicesFind() ([]string, error) {
 
 func DeviceBind(devPath string, listener func(self *KeyStor)) {
 	go func() {
-		dev, err := keyboard.New(devPath) ///dev/input/event14
+		dev, err := New(devPath) ///dev/input/event14
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -57,7 +56,7 @@ func DeviceBind(devPath string, listener func(self *KeyStor)) {
 		setListening(true)
 		keyStore := &KeyStor{complete: listener}
 		for e := range events {
-			if e.Code == keyboard.SHUTDOWN {
+			if e.Code == SHUTDOWN {
 				setListening(false)
 				break
 			}
@@ -66,9 +65,9 @@ func DeviceBind(devPath string, listener func(self *KeyStor)) {
 	}()
 }
 
-func handleKeyEvent(e keyboard.InputEvent, keystore *KeyStor) {
+func handleKeyEvent(e InputEvent, keystore *KeyStor) {
 	switch e.Type {
-	case keyboard.EvKey:
+	case EvKey:
 		//logKeyPress(e)
 		onKeyRelease(e, keystore)
 		break

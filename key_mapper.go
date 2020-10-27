@@ -1,4 +1,4 @@
-package keyboard
+package usb_keyboard
 
 const (
 	KEY_ENTER    = 28

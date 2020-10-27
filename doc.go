@@ -10,4 +10,4 @@
 //
 // * Capture state changes
 //
-package keyboard
+package usb_keyboard

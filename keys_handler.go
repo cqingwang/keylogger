@@ -1,16 +1,15 @@
-package usage
+package usb_keyboard
 
 import (
 	"fmt"
-	"github.com/cqingwang/usb_keyboard/keyboard"
 )
 
 type KeyStor struct {
-	keys     []keyboard.InputEvent
+	keys     []InputEvent
 	complete func(self *KeyStor)
 }
 
-func onKeyRelease(e keyboard.InputEvent, keystore *KeyStor) {
+func onKeyRelease(e InputEvent, keystore *KeyStor) {
 	if !e.KeyRelease() {
 		return
 	}
@@ -18,7 +17,7 @@ func onKeyRelease(e keyboard.InputEvent, keystore *KeyStor) {
 	keystore.Append(e)
 }
 
-func logEvent(e keyboard.InputEvent) {
+func logEvent(e InputEvent) {
 	fmt.Println("")
 	fmt.Println("time:", e.UnixTime(), ", type:", e.Type, ", code:", e.Code)
 	fmt.Println("keyRelease", e.KeyString())
@@ -32,12 +31,12 @@ func (i *KeyStor) ToString() string {
 	return rst
 }
 
-func (i *KeyStor) Append(key keyboard.InputEvent) *KeyStor {
-	if key.Code == keyboard.KEY_DOWN_80 || key.Code == keyboard.KEY_DOWN_108 {
+func (i *KeyStor) Append(key InputEvent) *KeyStor {
+	if key.Code == KEY_DOWN_80 || key.Code == KEY_DOWN_108 {
 		return i
 	}
 
-	if key.Code == keyboard.KEY_ENTER {
+	if key.Code == KEY_ENTER {
 		done(i)
 		i.popReset()
 		return i
@@ -53,11 +52,11 @@ func done(i *KeyStor) {
 	}
 }
 
-func (i *KeyStor) Get() []keyboard.InputEvent {
+func (i *KeyStor) Get() []InputEvent {
 	return i.keys
 }
 
-func (i *KeyStor) popReset() []keyboard.InputEvent {
-	i.keys = []keyboard.InputEvent{}
+func (i *KeyStor) popReset() []InputEvent {
+	i.keys = []InputEvent{}
 	return i.keys
 }

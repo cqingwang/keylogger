@@ -1,4 +1,4 @@
-package keyboard
+package usb_keyboard
 
 import (
 	"bytes"
