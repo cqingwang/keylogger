@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 	"usb_keyboard/usage"
 )
 
@@ -13,5 +14,12 @@ func main() {
 		return
 	}
 
-	usage.DeviceBind(err, devices[0])
+	usage.DeviceBind(err, devices[0], func(self *usage.KeyStor) {
+		fmt.Println("time:", self.Get()[0].UnixTime(), "code:", self.ToString())
+	})
+
+	for {
+		time.Sleep(2000)
+		fmt.Println("keyboard listen:", usage.HasListening())
+	}
 }

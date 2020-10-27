@@ -107,22 +107,25 @@ func (k *KeyLogger) IsRoot() bool {
 // Blocking call, returns channel
 // Make sure to close channel when finish
 func (k *KeyLogger) Read() chan InputEvent {
-	event := make(chan InputEvent)
-	go func(event chan InputEvent) {
+	emit := make(chan InputEvent)
+	go func(emit chan InputEvent) {
 		for {
-			e, err := k.read()
+			keyEvent, err := k.read()
 			if err != nil {
 				fmt.Println(err)
-				close(event)
+				close(emit)
 				break
 			}
 
-			if e != nil {
-				event <- *e
+			if keyEvent != nil {
+				emit <- *keyEvent
 			}
 		}
-	}(event)
-	return event
+		//shutdown flag
+		shutdown := InputEvent{Code: SHUTDOWN}
+		emit <- shutdown
+	}(emit)
+	return emit
 }
 
 // read from file description and parse binary into go struct

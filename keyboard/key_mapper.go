@@ -4,6 +4,7 @@ const (
 	KEY_ENTER    = 28
 	KEY_DOWN_80  = 80
 	KEY_DOWN_108 = 108
+	SHUTDOWN     = 65535
 )
 
 // keyCodeMap connects the code with human readable key
