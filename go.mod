@@ -1,3 +1,3 @@
-module usb_keyboard
+module github.com/cqingwang/usb_keyboard
 
 go 1.15
