@@ -3,6 +3,7 @@ package usage
 import (
 	"fmt"
 	"github.com/cqingwang/usb_keyboard/keyboard"
+	"sync"
 	"time"
 )
 
@@ -16,8 +17,8 @@ func Watch(complete func(self *KeyStor)) {
 			}
 
 			for _, dev := range devices {
-				val, ok := listenDevices[dev]
-				if ok && val {
+				val, ok := listenDevices.Load(dev)
+				if ok && val.(bool) {
 					continue
 				}
 				fmt.Println("keyboard.Bind:", dev)
@@ -29,9 +30,9 @@ func Watch(complete func(self *KeyStor)) {
 
 }
 
-var listenDevices = make(map[string]bool)
+var listenDevices = sync.Map{}
 
-func DeviceBind(devPath string, listener func(self *KeyStor)) {
+func DeviceBind(devPath string, listener func(*KeyStor)) {
 	go func() {
 		dev, err := keyboard.New(devPath) ///dev/input/event14
 		if err != nil {
@@ -40,12 +41,12 @@ func DeviceBind(devPath string, listener func(self *KeyStor)) {
 		}
 		defer dev.Close()
 		events := dev.Read()
-		listenDevices[devPath] = true
+		listenDevices.Store(devPath, true)
 		keyStore := &KeyStor{complete: listener}
 		for e := range events {
 			if e.Code == keyboard.SHUTDOWN {
 				fmt.Println("keyboard.UnBind:", devPath)
-				listenDevices[devPath] = false
+				listenDevices.Store(devPath, false)
 				break
 			}
 			handleKeyEvent(e, keyStore)
